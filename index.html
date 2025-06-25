@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全國防空避難設施指南</title>
+    <style>
+        /* --- CSS Variables (Theme) --- */
+        :root {
+            --primary-color: #1a3a6e;  /* 深海軍藍 */
+            --secondary-color: #ffc107; /* 警示黃 */
+            --background-color: #f8f9fa; /* 淡灰色背景 */
+            --text-color: #343a40; /* 深灰色文字 */
+            --light-text-color: #ffffff;
+            --card-bg-color: #ffffff;
+            --border-color: #dee2e6;
+        }
+
+        /* --- Global Styles --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* --- Layout & Container --- */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            text-align: center;
+            padding: 80px 20px;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        .hero-button {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: #212529;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .hero-button:hover {
+            transform: translateY(-3px);
+            background-color: #ffca2c;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1.1rem; }
+        }
+
+        /* --- Section Card Style --- */
+        .section-card {
+            background-color: var(--card-bg-color);
+            margin: 40px 0;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        .section-card h2 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--secondary-color);
+            display: inline-block;
+        }
+        
+        @media (max-width: 768px) {
+            .section-card { padding: 25px; }
+            .section-card h2 { font-size: 1.8rem; }
+        }
+
+        /* --- Specific Section Styles --- */
+        
+        /* Identify Section */
+        .identify-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        .identify-text {
+            flex: 1;
+        }
+        .shelter-sign-image {
+            max-width: 200px;
+            border: 4px solid var(--secondary-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        @media (max-width: 768px) {
+            .identify-content { flex-direction: column; }
+            .shelter-sign-image { max-width: 150px; margin-bottom: 20px; }
+        }
+
+        /* Steps List */
+        .steps-list {
+            list-style: none;
+            padding-left: 0;
+            counter-reset: steps-counter;
+        }
+        .steps-list li {
+            counter-increment: steps-counter;
+            display: flex;
+            align-items: flex-start;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        .steps-list li::before {
+            content: counter(steps-counter);
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            margin-right: 20px;
+            margin-top: -2px;
+        }
+
+        /* Emergency Kit Grid */
+        .kit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 20px;
+        }
+        .kit-item {
+            text-align: center;
+            padding: 20px 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .kit-item .icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        .kit-item span {
+            font-weight: 500;
+        }
+
+        /* --- Interactive Map Section --- */
+        .map-container {
+            width: 100%;
+            height: 600px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden; /* Ensures the iframe corners are also rounded */
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* --- FAQ Accordion --- */
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 20px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-question:hover {
+            color: var(--primary-color);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding: 0 10px;
+        }
+        .faq-answer p {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .faq-icon {
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 15px;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 300px; /* Adjust if content is longer */
+            padding-bottom: 20px;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        /* --- Footer --- */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+            color: #6c757d;
+        }
+        .footer p {
+            margin: 0.5rem 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="container">
+            <h1>防空避難設施指南</h1>
+            <p>關鍵時刻，守護你我安全。立即查詢最近的避難點。</p>
+            <a href="#map-section" class="hero-button" id="find-shelter-btn">立即查詢避難地圖</a>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="section-card">
+            <h2>什麼是防空避難設施？</h2>
+            <p>防空避難設施，是經過政府認證、結構堅固的空間，通常位於大樓、學校或公共建築的地下室。在戰爭或空襲等緊急情況發生時，它能提供臨時的掩蔽，大幅降低空襲帶來的直接與間接傷害，是保護生命安全的重要場所。</p>
+        </section>
+
+        <section class="section-card">
+            <h2>如何辨識避難設施？</h2>
+            <div class="identify-content">
+                <div class="identify-text">
+                    <p>請認明這個統一的黃色標示牌。它通常會貼在設有防空避難設施的建築物入口處或牆面上。</p>
+                    <p><strong>標誌特徵：</strong>長方形黃底、黑字，並有明顯的「一家人奔跑」圖示。平時多留意周遭環境，記下離家和公司最近的避難點，是提升應變能力的第一步。</p>
+                </div>
+                <img src="https://adr.npa.gov.tw/userfiles/chcdo/images/20240704101248684.jpeg" alt="防空避難設施標誌" class="shelter-sign-image">
+            </div>
+        </section>
+
+        <section id="map-section" class="section-card">
+            <h2>全國防空避難設施地圖</h2>
+            <p>使用下方互動地圖，輸入您的地址或開啟定位，即可查詢附近的防空避難設施。建議將此頁面加入書籤，以備不時之需。</p>
+            <div class="map-container">
+                <iframe 
+                    src="https://n8n-icbgqqoa.ap-northeast-1.clawcloudrun.com/webhook/defenceLocationMap" 
+                    title="全國防空避難設施互動地圖" 
+                    allow="geolocation"
+                    frameborder="0">
+                </iframe>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <h2>緊急應變四步驟</h2>
+            <ul class="steps-list">
+                <li><strong>保持鎮定，聽從指示：</strong>聽到空襲警報時，切勿慌亂。遵循軍、警及民防人員的引導，或依預先規劃路線行動。</li>
+                <li><strong>迅速移動，就近避難：</strong>立即停止所有活動，迅速進入最近的防空避難設施。若室外有車，人員應下車尋找掩蔽。</li>
+                <li><strong>遠離危險，尋找掩蔽：</strong>若無法及時進入避難設施，應立即遠離窗戶，尋找堅固的牆角或桌下掩蔽，臥倒並保護頭部。</li>
+                <li><strong>切勿搭乘電梯：</strong>緊急疏散時，電力系統可能中斷，搭乘電梯有受困風險。務必行走樓梯進行疏散。</li>
+            </ul>
+        </section>
+        
+        <section class="section-card">
+            <h2>緊急避難包（Go-Bag）建議清單</h2>
+            <p>平時準備一個輕便的緊急避難包，放置在易於取拿處。當需要緊急疏散時，可以快速攜帶。</p>
+            <div class="kit-grid">
+                <div class="kit-item"><span class="icon">💧</span><span>飲用水</span></div>
+                <div class="kit-item"><span class="icon">🍪</span><span>高熱量乾糧</span></div>
+                <div class="kit-item"><span class="icon">🩹</span><span>個人藥品/急救包</span></div>
+                <div class="kit-item"><span class="icon">🔦</span><span>手電筒(含電池)</span></div>
+                <div class="kit-item"><span class="icon">📻</span><span>小型收音機</span></div>
+                <div class="kit-item"><span class="icon">🆔</span><span>重要證件影本</span></div>
+                <div class="kit-item"><span class="icon">💰</span><span>少量現金</span></div>
+                <div class="kit-item"><span class="icon">📱</span><span>行動電源</span></div>
+            </div>
+        </section>
+        
+        <section class="section-card">
+            <h2>常見問答 (FAQ)</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>公寓大廈的地下停車場算是避難設施嗎？</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>不一定。只有經過政府勘查、掛有「防空避難設施」標誌的地下室，才算是合格的避難設施。一般的地下停車場未必具備足夠的防護能力。請務必以官方地圖和現場標示為準。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>空襲警報解除後，可以馬上離開避難室嗎？</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>在警報解除後，應先保持冷靜，聽從現場民防人員的指示。確認外部環境安全後，再有序地離開，避免因推擠造成二次傷害。</p>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <button class="faq-question">
+                        <span>避難設施平時是鎖著的，緊急時怎麼辦？</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>依據規定，附設防空避難設備之場所，在接到空襲警報時，應在規定時間內開放供民眾避難。大部分設施由所在地的里長或大樓管理員負責開啟。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>多一分準備，多一分安心。平時做好準備，危時才能從容應對。</p>
+        <p>資料來源：內政部警政署全球資訊網、幸福感不動產</p>
+    </footer>
+
+    <script>
+        // --- Smooth Scroll for the Hero Button ---
+        const findShelterBtn = document.getElementById('find-shelter-btn');
+        if(findShelterBtn) {
+            findShelterBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        }
+
+        // --- FAQ Accordion Logic ---
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                // Check if the clicked item is already active
+                const wasActive = item.classList.contains('active');
+                
+                // Optional: Close all other items first for a classic accordion behavior
+                // faqItems.forEach(i => i.classList.remove('active'));
+
+                // Toggle the active class on the clicked item
+                if (!wasActive) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
