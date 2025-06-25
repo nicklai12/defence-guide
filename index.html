@@ -71,11 +71,6 @@
             background-color: #ffca2c;
         }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .hero p { font-size: 1.1rem; }
-        }
-
         /* --- Section Card Style --- */
         .section-card {
             background-color: var(--card-bg-color);
@@ -94,14 +89,7 @@
             display: inline-block;
         }
         
-        @media (max-width: 768px) {
-            .section-card { padding: 25px; }
-            .section-card h2 { font-size: 1.8rem; }
-        }
-
-        /* --- Specific Section Styles --- */
-        
-        /* Identify Section */
+        /* --- Identify Section --- */
         .identify-content {
             display: flex;
             align-items: center;
@@ -110,18 +98,19 @@
         .identify-text {
             flex: 1;
         }
+        .identify-text ul {
+            padding-left: 20px;
+        }
+        .identify-text li {
+            margin-bottom: 10px;
+        }
         .shelter-sign-image {
-            max-width: 200px;
-            border: 4px solid var(--secondary-color);
+            max-width: 250px; /* Adjusted size slightly for better visibility of the new image */
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
-        @media (max-width: 768px) {
-            .identify-content { flex-direction: column; }
-            .shelter-sign-image { max-width: 150px; margin-bottom: 20px; }
-        }
 
-        /* Steps List */
+        /* --- Steps List --- */
         .steps-list {
             list-style: none;
             padding-left: 0;
@@ -151,7 +140,7 @@
             margin-top: -2px;
         }
 
-        /* Emergency Kit Grid */
+        /* --- Emergency Kit Grid --- */
         .kit-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -179,7 +168,7 @@
             height: 600px;
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            overflow: hidden; /* Ensures the iframe corners are also rounded */
+            overflow: hidden; 
         }
         .map-container iframe {
             width: 100%;
@@ -228,7 +217,7 @@
             margin-left: 15px;
         }
         .faq-item.active .faq-answer {
-            max-height: 300px; /* Adjust if content is longer */
+            max-height: 300px;
             padding-bottom: 20px;
         }
         .faq-item.active .faq-icon {
@@ -244,6 +233,29 @@
         }
         .footer p {
             margin: 0.5rem 0;
+        }
+
+        /* --- Responsive Styles for Mobile --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1.1rem; }
+            
+            .section-card { padding: 25px; }
+            .section-card h2 { font-size: 1.8rem; }
+            
+            .identify-content { flex-direction: column-reverse; } /* Reverse order to show image first then text */
+            .shelter-sign-image { max-width: 200px; margin-bottom: 20px; }
+            
+            .steps-list li {
+                flex-direction: column; 
+                align-items: flex-start;
+                gap: 12px;
+                margin-bottom: 30px;
+            }
+            .steps-list li::before {
+                margin-right: 0;
+                margin-top: 0;
+            }
         }
 
     </style>
@@ -269,10 +281,16 @@
             <h2>如何辨識避難設施？</h2>
             <div class="identify-content">
                 <div class="identify-text">
-                    <p>請認明這個統一的黃色標示牌。它通常會貼在設有防空避難設施的建築物入口處或牆面上。</p>
-                    <p><strong>標誌特徵：</strong>長方形黃底、黑字，並有明顯的「一家人奔跑」圖示。平時多留意周遭環境，記下離家和公司最近的避難點，是提升應變能力的第一步。</p>
+                    <p>請認明統一的防空避難設施標示牌。為方便民眾辨識，標誌已更新，但<strong>新舊版本均有效力</strong>。</p>
+                    <p><strong>標誌特徵：</strong></p>
+                    <ul>
+                        <li><strong>新式標誌：</strong>黃色底板，包含「防空避難設施」字樣、一家人奔跑圖示，並附有QR Code供快速查詢。</li>
+                        <li><strong>舊式標誌：</strong>白色底板，標示「防空避-難室」、箭頭及人員奔跑圖示。</li>
+                    </ul>
+                    <p>無論看到哪一種標誌，都代表該處為合格的避難設施。平時多留意周遭環境，是提升應變能力的第一步。</p>
                 </div>
-                <img src="https://adr.npa.gov.tw/userfiles/chcdo/images/20240704101248684.jpeg" alt="防空避難設施標誌" class="shelter-sign-image">
+                <!-- UPDATED IMAGE -->
+                <img src="https://webws.miaoli.gov.tw/001/Upload/452/relpic/10317/630811/319ad00a-e91c-40d3-87fe-840b80c0f8e5.png" alt="新舊防空避難設施標誌" class="shelter-sign-image">
             </div>
         </section>
 
@@ -351,7 +369,7 @@
 
     <footer class="footer">
         <p>多一分準備，多一分安心。平時做好準備，危時才能從容應對。</p>
-        <p>資料來源：內政部警政署全球資訊網、幸福感不動產</p>
+        <p>資料來源：內政部警政署全球資訊網、幸福感不動產、苗栗縣政府</p>
     </footer>
 
     <script>
@@ -374,13 +392,11 @@
         faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
             question.addEventListener('click', () => {
-                // Check if the clicked item is already active
                 const wasActive = item.classList.contains('active');
                 
-                // Optional: Close all other items first for a classic accordion behavior
+                // Optional: To close all other items first for a classic accordion behavior
                 // faqItems.forEach(i => i.classList.remove('active'));
 
-                // Toggle the active class on the clicked item
                 if (!wasActive) {
                     item.classList.add('active');
                 } else {
