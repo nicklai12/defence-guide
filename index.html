@@ -105,7 +105,7 @@
             margin-bottom: 10px;
         }
         .shelter-sign-image {
-            max-width: 250px; /* Adjusted size slightly for better visibility of the new image */
+            max-width: 250px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
@@ -235,6 +235,37 @@
             margin: 0.5rem 0;
         }
 
+        /* --- NEW: Back to Top Button --- */
+        #back-to-top-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none; /* Hidden by default */
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            border: none;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 24px;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.2s;
+        }
+        #back-to-top-btn.show {
+            display: block;
+            opacity: 0.8;
+            visibility: visible;
+        }
+        #back-to-top-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
         /* --- Responsive Styles for Mobile --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
@@ -243,7 +274,7 @@
             .section-card { padding: 25px; }
             .section-card h2 { font-size: 1.8rem; }
             
-            .identify-content { flex-direction: column-reverse; } /* Reverse order to show image first then text */
+            .identify-content { flex-direction: column-reverse; }
             .shelter-sign-image { max-width: 200px; margin-bottom: 20px; }
             
             .steps-list li {
@@ -255,6 +286,15 @@
             .steps-list li::before {
                 margin-right: 0;
                 margin-top: 0;
+            }
+
+            /* --- NEW: Mobile Footer Adjustments --- */
+            .footer {
+                padding: 30px 20px;
+            }
+            .footer p {
+                font-size: 0.85rem;
+                line-height: 1.5;
             }
         }
 
@@ -289,7 +329,6 @@
                     </ul>
                     <p>無論看到哪一種標誌，都代表該處為合格的避難設施。平時多留意周遭環境，是提升應變能力的第一步。</p>
                 </div>
-                <!-- UPDATED IMAGE -->
                 <img src="https://webws.miaoli.gov.tw/001/Upload/452/relpic/10317/630811/319ad00a-e91c-40d3-87fe-840b80c0f8e5.png" alt="新舊防空避難設施標誌" class="shelter-sign-image">
             </div>
         </section>
@@ -372,6 +411,9 @@
         <p>資料來源：內政部警政署全球資訊網、幸福感不動產、苗栗縣政府</p>
     </footer>
 
+    <!-- NEW: Back to Top Button HTML -->
+    <button id="back-to-top-btn" title="回到頂部">↑</button>
+
     <script>
         // --- Smooth Scroll for the Hero Button ---
         const findShelterBtn = document.getElementById('find-shelter-btn');
@@ -388,20 +430,36 @@
 
         // --- FAQ Accordion Logic ---
         const faqItems = document.querySelectorAll('.faq-item');
-
         faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
             question.addEventListener('click', () => {
                 const wasActive = item.classList.contains('active');
-                
-                // Optional: To close all other items first for a classic accordion behavior
-                // faqItems.forEach(i => i.classList.remove('active'));
-
                 if (!wasActive) {
                     item.classList.add('active');
                 } else {
                     item.classList.remove('active');
                 }
+            });
+        });
+
+        // --- NEW: Back to Top Button Logic ---
+        const backToTopBtn = document.getElementById('back-to-top-btn');
+        const scrollThreshold = 300; // Pixels to scroll before button appears
+
+        // Show or hide the button based on scroll position
+        window.onscroll = function() {
+            if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        };
+
+        // Scroll to the top when the button is clicked
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
         });
     </script>
