@@ -234,6 +234,14 @@
         .footer p {
             margin: 0.5rem 0;
         }
+        /* NEW: Footer link style */
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
 
         /* --- Back to Top Button --- */
         #back-to-top-btn {
@@ -339,7 +347,7 @@
                 <iframe 
                     src="https://n8n-icbgqqoa.ap-northeast-1.clawcloudrun.com/webhook/defenceLocationMap" 
                     title="全國防空避難設施互動地圖" 
-                    allow="geolocation; fullscreen" <!-- ★★★ 關鍵修正點在這裡 ★★★ -->
+                    allow="geolocation; fullscreen"
                     frameborder="0">
                 </iframe>
             </div>
@@ -397,7 +405,7 @@
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>依據規定，附設防空避難設備之場所，在接到空襲警報時，應在規定時間內開放供民眾避難。大部分設施由所在地的里長或大樓管理員負責開啟。</p>
+                        <p>依據規定，附設防空避難設備之場所，在接到空襲警報時，應在規定時間内開放供民眾避難。大部分設施由所在地的里長或大樓管理員負責開啟。</p>
                     </div>
                 </div>
             </div>
@@ -408,6 +416,8 @@
     <footer class="footer">
         <p>多一分準備，多一分安心。平時做好準備，危時才能從容應對。</p>
         <p>資料來源：內政部警政署全球資訊網、幸福感不動產、苗栗縣政府</p>
+        <!-- NEW: Developer info added here -->
+        <p>網頁開發：<a href="mailto:nicklai12@gmail.com">nicklai12@gmail.com</a></p>
     </footer>
 
     <button id="back-to-top-btn" title="回到頂部">↑</button>
